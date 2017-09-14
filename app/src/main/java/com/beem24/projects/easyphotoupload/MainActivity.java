@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }else {
             //Permission Granted, lets go pick photo
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
             startActivityForResult(intent, REQUEST_PICK_PHOTO);
         }
 
@@ -77,12 +79,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_PICK_PHOTO && resultCode == REQUEST_PICK_PHOTO &&
+        if(requestCode == REQUEST_PICK_PHOTO && resultCode == RESULT_OK &&
                 data != null) {
             //extract absolute image path from Uri
             Uri uri = data.getData();
             Cursor cursor = MediaStore.Images.Media.query(getContentResolver(), uri, new String[]{MediaStore.Images.Media.DATA});
-            if(cursor != null) {
+
+            if(cursor != null && cursor.moveToFirst()) {
                 String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
 
                 //Create ImageCompressTask and execute with Executor.
@@ -102,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
             //prepare for uploads.
 
             File file = compressed.get(0);
+
+            Log.d("ImageCompressor", "New photo size ==> " + file.length()); //log new file size.
+
             selectedImage.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
         }
 

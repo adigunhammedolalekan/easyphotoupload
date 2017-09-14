@@ -20,8 +20,8 @@ import java.util.Locale;
 
 public class Util {
 
-    //SMF to generate a unique name for our compress file.
-    public static final SimpleDateFormat SMF = new SimpleDateFormat("yyyymmddhhmmss", Locale.getDefault());
+    //SDF to generate a unique name for our compress file.
+    public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyymmddhhmmss", Locale.getDefault());
 
     /*
         compress the file/photo from @param <b>path</b> to a private location on the current device and return the compressed file.
@@ -50,7 +50,7 @@ public class Util {
         Bitmap bitmap = decodeImageFromFiles(path, /* your desired width*/300, /*your desired height*/ 300);
 
         //create placeholder for the compressed image file
-        File compressed = new File(root, SMF.format(new Date()) + ".jpg" /*Your desired format*/);
+        File compressed = new File(root, SDF.format(new Date()) + ".jpg" /*Your desired format*/);
 
         //convert the decoded bitmap to stream
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
