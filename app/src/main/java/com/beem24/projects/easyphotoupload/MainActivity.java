@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         public void onComplete(List<File> compressed) {
             //photo compressed. Yay!
 
-            //prepare for uploads.
+            //prepare for uploads. Use an Http library like Retrofit, Volley or async-http-client (My favourite)
 
             File file = compressed.get(0);
 
